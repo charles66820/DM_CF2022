@@ -145,7 +145,7 @@ void swap(int *a, int *b)
     \part Calculez $\WP(\code{swap},\psi)$ pour $\psi$ la post-condition fournie, et déduisez-en un triplet de \bsc{Hoare} valide.
 
     \begin{solutionorbox}
-        METTEZ VOTRE RÉPONSE ICI.
+        METTEZ VOTRE RÉPONSE ICI.%TODO: mettre le calcul
     \end{solutionorbox}
 
     \part Évidemment, on a ici une correction partielle, dans le sens où on n’a pas tenu compte des comportements indéterminés.
@@ -159,7 +159,9 @@ void swap(int *a, int *b)
     \part Quel autre problème voyez-vous à notre preuve ? Quelle hypothèse cachée faut-il rajouter pour qu’elle soit correcte ?
 
     \begin{solutionorbox}
-        METTEZ VOTRE RÉPONSE ICI.
+        Le problème de notre preuve est qu'avec le XOR, nous ne passons pas par une variable temporaire. Donc, il faut rajouter
+        l'hypothèse que nos pointeurs ne partagent pas la même adresse sinon, comme le principe du XOR est de comparer 2 valeurs différentes,
+        la preuve n'aurait aucun sens, car on comparerait 2 valeurs identiques et donc le swap ne fonctionnerait pas.
     \end{solutionorbox}
 
     \part Compléter le fichier \texttt{swap-xor.h} de manière à ce que Frama-C puisse démontrer la post-condition fournie, en ajoutant les assertions RTE. Il est bien évidemment possible (et encouragé) de répondre aux questions précédentes grâce à celle-ci.
