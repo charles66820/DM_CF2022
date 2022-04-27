@@ -16,3 +16,4 @@ _minted-*
 
 # Code
 .o
+.frama-c/
