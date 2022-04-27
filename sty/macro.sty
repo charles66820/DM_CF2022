@@ -1,7 +1,18 @@
 \usepackage[utf8x]{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage[french]{babel}
+
+% Fonts packages
+\usepackage{ifxetex}
+\ifxetex
+    \usepackage{fontspec}
+    \setmainfont{OpenDyslexic}
+\else
+    \usepackage[T1]{fontenc}
+\fi
+
+% Math & theorem fonts
 \usepackage{amsmath, amsthm, amsfonts, amssymb}
+
 \usepackage{hyperref}
 \usepackage{vmargin}
 \usepackage{url}
@@ -38,7 +49,7 @@
 \newtheorem{notation}[exemple]{Notation}
 
 \newcounter{numExercice}
-  
+
 \newcommand{\Z}{\mathbb{Z}}
 
 \newcommand{\Var}{\mathrm{Var}}
