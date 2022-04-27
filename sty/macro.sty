@@ -1,0 +1,67 @@
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amsthm, amsfonts, amssymb}
+\usepackage{hyperref}
+\usepackage{vmargin}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{stmaryrd}
+
+\lstdefinestyle{clang}{
+  language=[ANSI]C,
+  basicstyle=\ttfamily,
+  keywordstyle=\color{blue},
+  stringstyle=\color{brown},
+  commentstyle=\bfseries\color{red},
+  identifierstyle=\color{green!40!black}
+}
+
+
+\lstset{language=C,style=clang,numbers=left}
+
+\usepackage{color}
+\usepackage[tikz]{bclogo}
+
+%% Macros d'environnements utiles
+\newtheorem{exemple}{Exemple}[section]
+\newtheorem{definition}[exemple]{D\'efinition}
+\newtheorem{theoreme}[exemple]{Th\'eor\`eme}
+\newtheorem{lemme}[exemple]{Lemme}
+\newtheorem{corollaire}[exemple]{Corollaire}
+\newtheorem{propriete}[exemple]{Propri\'et\'e}
+\newtheorem{probleme}[exemple]{Probl\`eme}
+\newtheorem{remarque}[exemple]{Remarque}
+\newtheorem{conjecture}[exemple]{Conjecture}
+\newtheorem{exercice}[exemple]{Exercice}
+\newtheorem{proposition}[exemple]{Proposition}
+\newtheorem{notation}[exemple]{Notation}
+
+\newcounter{numExercice}
+  
+\newcommand{\Z}{\mathbb{Z}}
+
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Arith}{\mathrm{Arith}}
+\newcommand{\Test}{\mathrm{Test}}
+\newcommand{\MemSet}{\mathbb{M}}
+\newcommand{\memory}{\mathcal{M}}
+\newcommand{\eval}[2]{\llbracket#1\rrbracket_{#2}}
+\newcommand{\Comp}{\mathrm{Comp}}
+\newcommand{\Guard}{\mathrm{Guard}}
+
+\newcommand{\Csimple}{\mathrm{C}_1}
+\newcommand{\Cboucles}{\mathrm{C}_2}
+
+\newcommand{\ArithP}{\mathrm{Arith_P}}
+
+\newcommand{\WP}{\mathrm{WP}}
+\newcommand{\WLP}{\mathrm{WLP}}
+
+\newcommand{\code}[1]{\text{\lstinline{#1}}}
+
+\newcommand{\result}{\backslash\text{\lstinline{result}}}
+\newcommand{\old}{\mathrm{old}}
+\newcommand{\atp}{\mathrm{at}}
+
+\newcommand{\triplet}[3]{\{#2\}#1\{#3\}}
