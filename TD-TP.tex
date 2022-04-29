@@ -240,9 +240,35 @@ void reverse(int *t, unsigned int i, unsigned int j,
 
     \begin{solutionorbox}
       On prouve :
-      $$\breaktowidth{12.7cm}{\neg(i<j) \wedge I => \WLP(16,\varphi) \equiv (i>=j) \wedge I => \forall k; i<=k<=j => t[k] == \old(t[j-k+i])}$$
-      On remarque donc qu'on a : $i==j==k => t[k] == \old(t[k]) \equiv \top$\\
-      Donc l'implication est vraie.
+      $$\breaktowidth{12.7cm}{\neg(i<j) \wedge I \Rightarrow \WLP(16,\varphi)\\
+      \equiv (i>=j) \wedge I \Rightarrow \forall k; i<=k<=j \Rightarrow t[k] == \old(t[j-k+i])}$$
+      On remarque donc qu'on a : $i==j==k \Rightarrow t[k] == \old(t[k]) \equiv \top$\\
+      Donc l'implication est vraie.\\
+      Pour chaque $I_i$, on calcule $\WLP(10-14,I_i)$ : \\
+      Pour $I_1 = i <= j+1 \wedge i >= \old(i) \wedge j <= \old(j)$
+      \begin{align*}
+        \WLP(10-14,I_1) \equiv & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \WLP(14, I_1)))))}\\
+        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, i <= j \wedge i >= \old(i) \wedge j-1 <= \old(j)))))}\\
+        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, (i+1 <= j \wedge i+1 >= \old(i) \wedge j-1 <= \old(j)) \Rightarrow I'_1)))}\\
+        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, I'_1))}\\
+        \equiv               & ~\breaktowidth{10cm}{\WLP(10, I'_1)}\\
+        \equiv               & ~\breaktowidth{10cm}{I'_1 = i+1 <= j \wedge i+1 >= \old(i) \wedge j-1 <= \old(j)}
+      \end{align*}
+      Donc $i < j \land I \Rightarrow \WLP(10-14,I_1)\\
+      \equiv i < j \land I \Rightarrow i+1 <= j \wedge i+1 >= \old(i) \wedge j-1 <= \old(j) $\\
+      et on remarque que si $i<j$ alors on a bien $i+1<=j$ donc l'implication est vraie.\\
+      Pour $I_2 = i + j == \old(i) + \old(j)$
+      \begin{align*}
+        \WLP(10-14,I_2) \equiv & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \WLP(14, I_2)))))}\\
+        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, i + j-1 == \old(i) + \old(j)))))}\\
+        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, i+1 + j-1 == \old(i) + \old(j))))}\\
+        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, I_2))}\\
+        \equiv               & ~\breaktowidth{10cm}{\WLP(10, I_2)}\\
+        \equiv               & ~\breaktowidth{10cm}{I_2 = i + j == \old(i) + \old(j)}
+      \end{align*}
+      Donc $i < j \land I \Rightarrow \WLP(10-14,I_2)\\
+      \equiv i < j \land I \Rightarrow i + j == \old(i) + \old(j) $\\
+      et comme $I_2$ n'a pas changé par définition, alors l'implication est vraie.\\
     \end{solutionorbox}
 
     \part Déduisez-en un triplet de \bsc{Hoare} valide pour votre fonction.
