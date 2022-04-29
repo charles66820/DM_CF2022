@@ -154,11 +154,11 @@ void swap(int *a, int *b)
         \equiv                    & ~\breaktowidth{10cm}{((*a) \XOR (*b)) \XOR (*a) == \old(*b) \wedge *a == \old(*a)}                                                \\
         \equiv                    & ~\breaktowidth{10cm}{*b == \old(*b) \wedge *a == \old(*a)}                                                                        \\
         \equiv                    & ~\breaktowidth{10cm}{*b == *b \wedge *a == *a}                                                                                    \\
-        \equiv                    & ~\top                                                                                                                             \\
-        & ~\text{Tripplet de Hoare = }\{T\}swap\{\psi\}\text{ avec }\psi \equiv \psi_1 \wedge \psi_2                                                                  \\
-        & ~\psi_1 = (*a == \old(*b))                                                                                                                                  \\
-        & ~\psi_2 = (*b == \old(*a))
+        \equiv                    & ~\top
       \end{align*}
+      Tripplet de Hoare = $\{T\}swap\{\psi\}$ avec $\psi \equiv \psi_1 \wedge \psi_2$\\
+      $\psi_1 = (*a == \old(*b))$\\
+      $\psi_2 = (*b == \old(*a))$
     \end{solutionorbox}
 
     \part Évidemment, on a ici une correction partielle, dans le sens où on n’a pas tenu compte des comportements indéterminés.
@@ -239,7 +239,10 @@ void reverse(int *t, unsigned int i, unsigned int j,
     Pour chaque Ii, précisez $\WLP(10-14,Ii)$ (utilisez le calcul de la question b), et justifiez que $i < j \land I \Rightarrow \WLP(10-14,Ii)$.
 
     \begin{solutionorbox}
-        METTEZ VOTRE RÉPONSE ICI.
+      On prouve :
+      $$\breaktowidth{12.7cm}{\neg(i<j) \wedge I => \WLP(16,\varphi) \equiv (i>=j) \wedge I => \forall k; i<=k<=j => t[k] == \old(t[j-k+i])}$$
+      On remarque donc qu'on a : $i==j==k => t[k] == \old(t[k]) \equiv \top$\\
+      Donc l'implication est vraie.
     \end{solutionorbox}
 
     \part Déduisez-en un triplet de \bsc{Hoare} valide pour votre fonction.
