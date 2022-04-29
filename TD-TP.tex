@@ -244,10 +244,11 @@ void reverse(int *t, unsigned int i, unsigned int j,
       $I_2 = (i + j == \old(i) + \old(j))$\\
       $I_3 = (\forall k; \old(i) <= k < i \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)]))$\\
       $I_4 = (\forall k; j < k <= \old(j) \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)]))$\\
+      $I_5 = (\forall k; i <= k <= j \Rightarrow t[k] == \old(t[k]))$\\
       Tout d'abord on prouve :
       $$\breaktowidth{12.7cm}{\neg(i<j) \wedge I \Rightarrow \WLP(16,\varphi)\\
       \equiv (i>=j) \wedge I \Rightarrow \forall k; i<=k<=j \Rightarrow t[k] == \old(t[j-k+i])}$$
-      On remarque donc qu'on a : $i==j==k \Rightarrow t[k] == \old(t[k]) \equiv \top$\\
+      On remarque donc qu'on a : $i=j=k \Rightarrow t[k] == \old(t[k]) \equiv \top$\\
       Donc l'implication est vraie.\\
       Pour chaque $I_i$, on calcule $\WLP(10-14,I_i)$ : \\
       Pour $I_1 = (i <= j+1 \wedge i >= \old(i) \wedge j <= \old(j))$
@@ -300,6 +301,21 @@ void reverse(int *t, unsigned int i, unsigned int j,
       \equiv i < j \land I \Rightarrow \forall k; j-1 < k <= \old(j) \Rightarrow t[i] == \old(t[\old(j)-k+\old(i)])$\\
       or grâce à l'invariant $I_3$ et comme on a $i<j$, alors dans la portion du tableau, pour chaque k entre $j$ et la valeur initiale de $j$, on a
       chaque $t[j] = \old(t[\old(j)-k+\old(i)])$ donc l'implication est vraie.\\
+      Pour $I_5 = (\forall k; i <= k <= j \Rightarrow t[k] == \old(t[k]))$
+      \begin{align*}
+        \WLP(10-14,I_5) \equiv & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \WLP(14, I_5)))))}\\
+        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \forall k; i <= k <= j-1 \Rightarrow t[k] == \old(t[k])))))}\\
+        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, (\forall k; i+1 <= k <= j-1 \Rightarrow t[k] == \old(t[k])) \Rightarrow I'_5)))}\\
+        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, I'_5))}\\
+        \equiv               & ~\breaktowidth{10cm}{\WLP(10, I'_5)}\\
+        \equiv               & ~\breaktowidth{10cm}{I'_5 = (\forall k; i+1 <= k <= j-1 \Rightarrow t[k] == \old(t[k]))}
+      \end{align*}
+      Donc $i < j \land I \Rightarrow \WLP(10-14,I_5)\\
+      \equiv i < j \land I \Rightarrow \forall k; i+1 <= k <= j-1 \Rightarrow t[k] == \old(t[k])$\\
+      or, on sait que $i<j$ et grâce à l'invariant $I_1$, on sait aussi que $i$ est strictement croissant et $j$ est strictement décroissant. De plus,
+      avec les invariants $I_3$ et $I_4$, seules les portions du tableau entre $\old(i)$ et $i$ et entre $j$ et $\old(j)$ sont modifiées, donc la portion
+      entre $i$ et $j$ n'est pas encore modifiée et c'est ce qui est écrit à droite de l'implication donc cette dernière est vraie.\\
+      Donc on peut déduire que $i < j \land I \Rightarrow \WLP(10-14,I)$ est vraie.
     \end{solutionorbox}
 
     \part Déduisez-en un triplet de \bsc{Hoare} valide pour votre fonction.
