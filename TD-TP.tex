@@ -145,7 +145,20 @@ void swap(int *a, int *b)
     \part Calculez $\WP(\code{swap},\psi)$ pour $\psi$ la post-condition fournie, et déduisez-en un triplet de \bsc{Hoare} valide.
 
     \begin{solutionorbox}
-        METTEZ VOTRE RÉPONSE ICI.%TODO: mettre le calcul
+      \begin{align*}
+        \WP(\code{swap},4) \equiv & ~\WP(6-8,\psi)                                                                                                                    \\
+        \equiv                    & ~\WP(6, \WP(7, \WP(8, \psi)))                                                                                                     \\
+        \equiv                    & ~\breaktowidth{10cm}{\WP(6, \WP(7, ((*a) \XOR (*b) == \old(*b) \wedge *b == \old(*a))))}                                          \\
+        \equiv                    & ~\breaktowidth{10cm}{\WP(6, (*a) \XOR ((*a) \XOR (*b)) == \old(*b) \wedge (*a) \XOR (*b) == \old(*a))}                            \\
+        \equiv                    & ~\breaktowidth{10cm}{(*a) \XOR (*b) \XOR [((*a) \XOR (*b)) \XOR (*b)] == \old(*b) \wedge ((*a) \XOR (*b)) \XOR (*b)) == \old(*a)} \\
+        \equiv                    & ~\breaktowidth{10cm}{((*a) \XOR (*b)) \XOR (*a) == \old(*b) \wedge *a == \old(*a)}                                                \\
+        \equiv                    & ~\breaktowidth{10cm}{*b == \old(*b) \wedge *a == \old(*a)}                                                                        \\
+        \equiv                    & ~\breaktowidth{10cm}{*b == *b \wedge *a == *a}                                                                                    \\
+        \equiv                    & ~\top                                                                                                                             \\
+        & ~\text{Tripplet de Hoare = }\{T\}swap\{\psi\}\text{ avec }\psi \equiv \psi_1 \wedge \psi_2                                                                  \\
+        & ~\psi_1 = (*a == \old(*b))                                                                                                                                  \\
+        & ~\psi_2 = (*b == \old(*a))
+      \end{align*}
     \end{solutionorbox}
 
     \part Évidemment, on a ici une correction partielle, dans le sens où on n’a pas tenu compte des comportements indéterminés.
