@@ -260,13 +260,29 @@ void reverse(int *t, unsigned int i, unsigned int j,
     \part Quelles sont les valeurs mémoires modifiées par cette fonction (et la boucle) ? Vous répondrez en donnant les clauses assigns et loop assigns correspondantes.
 
     \begin{solutionorbox}
-        METTEZ VOTRE RÉPONSE ICI.
+      Les valeurs mémoires modifiées sont les valeurs de i, j et les valeurs du tableau entre les indices $\old(i)$ et $\old(j)$.
+      \begin{center}
+        \begin{tabular}[h!]{c}
+          \begin{lstlisting}
+assigns t[i .. j];
+loop assigns i, j, t[\at(i,Pre) .. \at(j,Pre)];
+          \end{lstlisting}
+        \end{tabular}
+      \end{center}
     \end{solutionorbox}
 
     \part Que manque-t’il comme précondition pour que la fonction ne puisse pas faire d’erreur à l’exécution ?
 
     \begin{solutionorbox}
-        METTEZ VOTRE RÉPONSE ICI.
+      Il est nécessaire que n soit compris entre 0 et INT\_MAX et que i et j soient compris entre 0 et n.
+      \begin{center}
+        \begin{tabular}[h!]{c}
+          \begin{lstlisting}
+requires 0 < n <= INT_MAX;
+requires 0 <= i < j < n;
+          \end{lstlisting}
+        \end{tabular}
+      \end{center}
     \end{solutionorbox}
 
     \part Complétez les fichiers \texttt{reverse.c} et \texttt{reverse.h} de manière à ce que le contrat reflète tous les points vus ici et que frama-c accepte de prouver le contrat. Vous pouvez bien évidemment vous servir de cette question pour travailler les précédentes (c’est recommandé, d’ailleurs). On attendra bien sûr que toutes les assertions RTE soient démontrée, ainsi qu’une clause \code{terminates \\true}.
