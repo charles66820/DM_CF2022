@@ -156,7 +156,7 @@ void swap(int *a, int *b)
         \equiv                    & ~\breaktowidth{10cm}{*b == *b \wedge *a == *a}                                                                                    \\
         \equiv                    & ~\top
       \end{align*}
-      Tripplet de Hoare = $\{T\}swap\{\psi\}$ avec $\psi \equiv \psi_1 \wedge \psi_2$\\
+      Triplet de Hoare = $\{T\}swap\{\psi\}$ avec $\psi \equiv \psi_1 \wedge \psi_2$\\
       $\psi_1 = (*a == \old(*b))$\\
       $\psi_2 = (*b == \old(*a))$
     \end{solutionorbox}
@@ -212,7 +212,7 @@ void reverse(int *t, unsigned int i, unsigned int j,
     \part Quelle condition doit-être vraie à la sortie de la boucle (question sur 0 points, c’est quand même trivial) ?
 
     \begin{solutionorbox}
-        La condition pour sortir de la boucle est i > j, c'est-à-dire quand on a parcouru la moitié du tableau.
+        La condition pour sortir de la boucle est $i >= j$, c'est-à-dire quand on a parcouru la moitié du tableau.
     \end{solutionorbox}
 
     \part Calculez $\WLP(10-14,I)$ pour un invariant I quelconque.
@@ -321,7 +321,8 @@ void reverse(int *t, unsigned int i, unsigned int j,
     \part Déduisez-en un triplet de \bsc{Hoare} valide pour votre fonction.
 
     \begin{solutionorbox}
-        METTEZ VOTRE RÉPONSE ICI.
+        Comme on a prouvé que $\neg (i < j) \land I \Rightarrow \WLP(16,\varphi)$ et $i < j \land I \Rightarrow \WLP(10-14,I)$ sont vraies alors on a comme
+        Triplet de Hoare possible : $\{i<=j\}reverse\{\varphi\}$ avec $\varphi = (\forall k; i <= k <= j ==> t[k] == \old(t[j-k+i]))$
     \end{solutionorbox}
 
     \part Démontrez la terminaison de la fonction en donnant un variant de boucle et en démontrant qu’il décroît à chaque tour de boucle et qu’il est toujours positif (vous pouvez utiliser le calcul de la question b).
