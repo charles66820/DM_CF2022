@@ -218,7 +218,14 @@ void reverse(int *t, unsigned int i, unsigned int j,
     \part Calculez $\WLP(10-14,I)$ pour un invariant I quelconque.
 
     \begin{solutionorbox}
-        METTEZ VOTRE RÉPONSE ICI.
+      \begin{align*}
+        \WLP(10-14,I) \equiv & ~\breaktowidth{9.39cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \WLP(14, I)))))}\\
+        \equiv               & ~\breaktowidth{9.39cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, I[j \leftarrow j-1]))))}\\
+        \equiv               & ~\breaktowidth{9.39cm}{\WLP(10, \WLP(11, \WLP(12, I[j \leftarrow j-1][i \leftarrow i + 1])))}\\
+        \equiv               & ~\breaktowidth{9.39cm}{\WLP(10, \WLP(11, I[j \leftarrow j-1][i \leftarrow i + 1][t[j] \leftarrow \text{aux}]))}\\
+        \equiv               & ~\breaktowidth{9.39cm}{\WLP(10, I[j \leftarrow j-1][i \leftarrow i + 1][t[j] \leftarrow \text{aux}][t[i] \leftarrow t[j]])}\\
+        \equiv               & ~\breaktowidth{9.39cm}{I[j \leftarrow j-1][i \leftarrow i + 1][t[j] \leftarrow \text{aux}][t[i] \leftarrow t[j]][\text{aux} \leftarrow t[i]]}\\
+      \end{align*}
     \end{solutionorbox}
 
     \part Proposez des invariants de boucle pour votre boucle.
