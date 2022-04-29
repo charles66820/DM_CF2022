@@ -156,7 +156,7 @@ void swap(int *a, int *b)
         \equiv                    & ~\breaktowidth{10cm}{*b == *b \wedge *a == *a}                                                                                    \\
         \equiv                    & ~\top
       \end{align*}
-      Triplet de Hoare = $\{T\}swap\{\psi\}$ avec $\psi \equiv \psi_1 \wedge \psi_2$\\
+      Triplet de Hoare $= \{\top\}swap\{\psi\}$ avec $\psi \equiv \psi_1 \wedge \psi_2$\\
       $\psi_1 = (*a == \old(*b))$\\
       $\psi_2 = (*b == \old(*a))$
     \end{solutionorbox}
@@ -328,7 +328,21 @@ void reverse(int *t, unsigned int i, unsigned int j,
     \part Démontrez la terminaison de la fonction en donnant un variant de boucle et en démontrant qu’il décroît à chaque tour de boucle et qu’il est toujours positif (vous pouvez utiliser le calcul de la question b).
 
     \begin{solutionorbox}
-        METTEZ VOTRE RÉPONSE ICI.
+        On pose le variant $V = j$.\\
+        On doit prouver que : $(i < j) \land I \Rightarrow V >= 0$ et $(i < j) \land I \Rightarrow \WLP(10-14, V < at(V,P_0))$\\
+        Pour le premier lemme : $(i < j) \land I \Rightarrow V >= 0 \equiv (i < j) \land I \Rightarrow j >= 0$\\
+        Or comme on sait que pour qu'il n'y ait pas d'erreur d'exécution, on doit avoir $0 <= i < j < n$ donc $j$ est forcément positif.\\
+        Pour le deuxième lemme :$(i < j) \land I \Rightarrow \WLP(10-14, V < at(V,P_0)) \equiv (i < j) \land I \Rightarrow \WLP(10-14, j < at(j,10))$\\
+        On fait le calcul :
+        \begin{align*}
+            \WLP(10-14, j < at(j,10)) \equiv & ~\breaktowidth{7cm}{j-1 < at(j,10)}\\
+                                      \equiv & ~\breaktowidth{7cm}{j-1 < j}\\
+                                      \equiv & ~\breaktowidth{7cm}{\top}
+          \end{align*}
+          Donc on peut déduire que le deuxième lemme est vrai.\\
+          Comme on vient de prouver que $j$ est un variant pour la boucle 10-14,
+          alors elle se termine quelles que soient ses entrées. De plus, comme
+          c'est la seule boucle du programme, alors la fonction termine toujours.
     \end{solutionorbox}
 
     \part Quelles sont les valeurs mémoires modifiées par cette fonction (et la boucle) ? Vous répondrez en donnant les clauses assigns et loop assigns correspondantes.
