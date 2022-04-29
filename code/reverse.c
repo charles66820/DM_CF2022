@@ -22,3 +22,14 @@ void reverse(int *t, unsigned int i, unsigned int j, unsigned int n)
         j--;
     }
 }
+
+void revers_rec(int *t, unsigned int i, unsigned int j, unsigned int n)
+{
+  if (i >= j) return;
+
+  int aux = t[i];
+  t[i] = t[j];
+  t[j] = aux;
+
+  revers_rec(t, i + 1, j - 1, n);
+}
