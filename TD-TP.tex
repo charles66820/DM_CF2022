@@ -239,6 +239,7 @@ void reverse(int *t, unsigned int i, unsigned int j,
     Pour chaque Ii, précisez $\WLP(10-14,Ii)$ (utilisez le calcul de la question b), et justifiez que $i < j \land I \Rightarrow \WLP(10-14,Ii)$.
 
     \begin{solutionorbox}
+      On a en tout, 5 invariants :\\
       On prouve :
       $$\breaktowidth{12.7cm}{\neg(i<j) \wedge I \Rightarrow \WLP(16,\varphi)\\
       \equiv (i>=j) \wedge I \Rightarrow \forall k; i<=k<=j \Rightarrow t[k] == \old(t[j-k+i])}$$
@@ -269,6 +270,19 @@ void reverse(int *t, unsigned int i, unsigned int j,
       Donc $i < j \land I \Rightarrow \WLP(10-14,I_2)\\
       \equiv i < j \land I \Rightarrow i + j == \old(i) + \old(j) $\\
       et comme $I_2$ n'a pas changé par définition, alors l'implication est vraie.\\
+      Pour $I_3 = \forall k; \old(i) <= k < i \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)])$
+      \begin{align*}
+        \WLP(10-14,I_2) \equiv & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \WLP(14, I_3)))))}\\
+        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, I_3))))}\\
+        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \forall k; \old(i) <= k < i+1 \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)]))))}\\
+        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \forall k; \old(i) <= k < i+1 \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)])))}\\
+        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \forall k; \old(i) <= k < i+1 \Rightarrow t[j] == \old(t[\old(j)-k+\old(i)]))}\\
+        \equiv               & ~\breaktowidth{10cm}{\forall k; \old(i) <= k < i+1 \Rightarrow t[j] == \old(t[\old(j)-k+\old(i)])}
+      \end{align*}
+      Donc $i < j \land I \Rightarrow \WLP(10-14,I_3)\\
+      \equiv i < j \land I \Rightarrow \forall k; \old(i) <= k < i+1 \Rightarrow t[j] == \old(t[\old(j)-k+\old(i)])$\\
+      or grâce à l'invariant $I_4$ et comme on a $i<j$, alors dans la portion du tableau entre la valeur initiale de $i$ et $i+1$, on a
+      chaque $t[j] = \old(t[\old(j)-k+\old(i)])$ donc l'implication est vraie.
     \end{solutionorbox}
 
     \part Déduisez-en un triplet de \bsc{Hoare} valide pour votre fonction.
