@@ -243,6 +243,7 @@ void reverse(int *t, unsigned int i, unsigned int j,
       $I_1 = (i <= j+1 \wedge i >= \old(i) \wedge j <= \old(j))$\\
       $I_2 = (i + j == \old(i) + \old(j))$\\
       $I_3 = (\forall k; \old(i) <= k < i \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)]))$\\
+      $I_4 = (\forall k; j < k <= \old(j) \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)]))$\\
       Tout d'abord on prouve :
       $$\breaktowidth{12.7cm}{\neg(i<j) \wedge I \Rightarrow \WLP(16,\varphi)\\
       \equiv (i>=j) \wedge I \Rightarrow \forall k; i<=k<=j \Rightarrow t[k] == \old(t[j-k+i])}$$
@@ -284,8 +285,21 @@ void reverse(int *t, unsigned int i, unsigned int j,
       \end{align*}
       Donc $i < j \land I \Rightarrow \WLP(10-14,I_3)\\
       \equiv i < j \land I \Rightarrow \forall k; \old(i) <= k < i+1 \Rightarrow t[j] == \old(t[\old(j)-k+\old(i)])$\\
-      or grâce à l'invariant $I_4$ et comme on a $i<j$, alors dans la portion du tableau entre la valeur initiale de $i$ et $i+1$, on a
-      chaque $t[j] = \old(t[\old(j)-k+\old(i)])$ donc l'implication est vraie.
+      or grâce à l'invariant $I_4$ et comme on a $i<j$, alors dans la portion du tableau, pour chaque k entre la valeur initiale de $i$ et $i+1$, on a
+      chaque $t[j] = \old(t[\old(j)-k+\old(i)])$ donc l'implication est vraie.\\
+      Pour $I_4 = (\forall k; j < k <= \old(j) \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)]))$
+      \begin{align*}
+        \WLP(10-14,I_4) \equiv & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \WLP(14, I_4)))))}\\
+        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \forall k; j-1 < k <= \old(j) \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)])))))}\\
+        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \forall k; j-1 < k <= \old(j) \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)]))))}\\
+        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \forall k; j-1 < k <= \old(j) \Rightarrow aux == \old(t[\old(j)-k+\old(i)])))}\\
+        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \forall k; j-1 < k <= \old(j) \Rightarrow aux == \old(t[\old(j)-k+\old(i)]))}\\
+        \equiv               & ~\breaktowidth{10cm}{\forall k; j-1 < k <= \old(j) \Rightarrow t[i] == \old(t[\old(j)-k+\old(i)])}
+      \end{align*}
+      Donc $i < j \land I \Rightarrow \WLP(10-14,I_4)\\
+      \equiv i < j \land I \Rightarrow \forall k; j-1 < k <= \old(j) \Rightarrow t[i] == \old(t[\old(j)-k+\old(i)])$\\
+      or grâce à l'invariant $I_3$ et comme on a $i<j$, alors dans la portion du tableau, pour chaque k entre $j$ et la valeur initiale de $j$, on a
+      chaque $t[j] = \old(t[\old(j)-k+\old(i)])$ donc l'implication est vraie.\\
     \end{solutionorbox}
 
     \part Déduisez-en un triplet de \bsc{Hoare} valide pour votre fonction.
