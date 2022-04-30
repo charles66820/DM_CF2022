@@ -23,7 +23,7 @@
 //À compléter :
 /*@ predicate isMinPerm{L}(int *t, integer n) = \forall integer i; 0 <= i < n ==> i == \at(t[i],L);
 
-    predicate isMaxPerm{L}(int *t, integer n) = \forall integer i; 0 <= i < n ==> i == \at(t[n-i],L);
+    predicate isMaxPerm{L}(int *t, integer n) = \forall integer i; 0 <= i < n ==> i == \at(t[n-1-i],L);
  */
 
 // Exercice 4 :
