@@ -391,7 +391,7 @@ requires 0 <= i < j < n;
     On définit donc un bijection avec le prédicat suivant.
 
     \begin{lstlisting}
-predicate isPermutation(int *v, integer n) = 
+predicate isPermutation(int *v, integer n) =
 \forall integer i; 0 <= i < n ==> 0 <= v[i] < n &&
 \forall integer i,j; 0 <= i < j < n ==> v[i] != v[j];
     \end{lstlisting}
