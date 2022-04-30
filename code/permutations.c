@@ -23,23 +23,21 @@ void initPerm(int *P, unsigned int n) {
 bool isMaxPerm(int *P, unsigned int n) {
   bool res = true;
 
-  int i = n - 1;
+  int i = 0;
   /*@
-    loop invariant -1 <= i < n;
-    //loop invariant \forall integer k; 0 <= k < i ==> P[k] < P[k+1];
+    loop invariant 0 <= i <= n;
     loop invariant unchangedTab{Pre,Here}(P,P,0,n);
-    loop invariant isPermutation(P,n);
     loop invariant isMaxPerm(P,i) ==> res == 1 || !isMaxPerm(P,i) ==> res == 0;
     loop assigns i, res;
-    loop variant i;
+    loop variant n-i;
   */
-  while (i >= 0)
+  while (i < n)
   {
-    if (P[n-1-i] == i) {
+    if (P[i] == n-1-i) {
       res = false;
       break;
     }
-    i--;
+    i++;
   }
 
   return res;
