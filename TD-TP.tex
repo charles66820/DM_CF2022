@@ -253,36 +253,36 @@ void reverse(int *t, unsigned int i, unsigned int j,
       Pour chaque $I_i$, on calcule $\WLP(10-14,I_i)$ : \\
       Pour $I_1 = (i <= j+1 \wedge i >= \old(i) \wedge j <= \old(j))$
       \begin{align*}
-        \WLP(10-14,I_1) \equiv & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \WLP(14, I_1)))))}\\
-        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, i <= j \wedge i >= \old(i) \wedge j-1 <= \old(j)))))}\\
-        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, (i+1 <= j \wedge i+1 >= \old(i) \wedge j-1 <= \old(j)) \Rightarrow I'_1)))}\\
-        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, I'_1))}\\
-        \equiv               & ~\breaktowidth{10cm}{\WLP(10, I'_1)}\\
-        \equiv               & ~\breaktowidth{10cm}{I'_1 = (i+1 <= j \wedge i+1 >= \old(i) \wedge j-1 <= \old(j))}
+        \WLP(10-14,I_1) \equiv & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \WLP(14, I_1)))))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, i <= j \wedge i >= \old(i) \wedge j-1 <= \old(j)))))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \WLP(12, (i+1 <= j \wedge i+1 >= \old(i) \wedge j-1 <= \old(j)) \Rightarrow I'_1)))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, I'_1))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, I'_1)}\\
+        \equiv               & ~\breaktowidth{8.2cm}{I'_1 = (i+1 <= j \wedge i+1 >= \old(i) \wedge j-1 <= \old(j))}
       \end{align*}
       Donc $i < j \land I \Rightarrow \WLP(10-14,I_1)\\
       \equiv i < j \land I \Rightarrow i+1 <= j \wedge i+1 >= \old(i) \wedge j-1 <= \old(j) $\\
       et on remarque que si $i<j$ alors on a bien $i+1<=j$ donc l'implication est vraie.\\
       Pour $I_2 = (i + j == \old(i) + \old(j))$
       \begin{align*}
-        \WLP(10-14,I_2) \equiv & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \WLP(14, I_2)))))}\\
-        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, i + j-1 == \old(i) + \old(j)))))}\\
-        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, i+1 + j-1 == \old(i) + \old(j))))}\\
-        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, I_2))}\\
-        \equiv               & ~\breaktowidth{10cm}{\WLP(10, I_2)}\\
-        \equiv               & ~\breaktowidth{10cm}{I_2 = (i + j == \old(i) + \old(j))}
+        \WLP(10-14,I_2) \equiv & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \WLP(14, I_2)))))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, i + j-1 == \old(i) + \old(j)))))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \WLP(12, i+1 + j-1 == \old(i) + \old(j))))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, I_2))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, I_2)}\\
+        \equiv               & ~\breaktowidth{8.2cm}{I_2 = (i + j == \old(i) + \old(j))}
       \end{align*}
       Donc $i < j \land I \Rightarrow \WLP(10-14,I_2)\\
       \equiv i < j \land I \Rightarrow i + j == \old(i) + \old(j) $\\
       et comme $I_2$ n'a pas changé par définition, alors l'implication est vraie.\\
       Pour $I_3 = (\forall k; \old(i) <= k < i \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)]))$
       \begin{align*}
-        \WLP(10-14,I_3) \equiv & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \WLP(14, I_3)))))}\\
-        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, I_3))))}\\
-        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \forall k; \old(i) <= k < i+1 \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)]))))}\\
-        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \forall k; \old(i) <= k < i+1 \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)])))}\\
-        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \forall k; \old(i) <= k < i+1 \Rightarrow t[j] == \old(t[\old(j)-k+\old(i)]))}\\
-        \equiv               & ~\breaktowidth{10cm}{\forall k; \old(i) <= k < i+1 \Rightarrow t[j] == \old(t[\old(j)-k+\old(i)])}
+        \WLP(10-14,I_3) \equiv & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \WLP(14, I_3)))))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, I_3))))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \WLP(12, \forall k; \old(i) <= k < i+1 \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)]))))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \forall k; \old(i) <= k < i+1 \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)])))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \forall k; \old(i) <= k < i+1 \Rightarrow t[j] == \old(t[\old(j)-k+\old(i)]))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\forall k; \old(i) <= k < i+1 \Rightarrow t[j] == \old(t[\old(j)-k+\old(i)])}
       \end{align*}
       Donc $i < j \land I \Rightarrow \WLP(10-14,I_3)\\
       \equiv i < j \land I \Rightarrow \forall k; \old(i) <= k < i+1 \Rightarrow t[j] == \old(t[\old(j)-k+\old(i)])$\\
@@ -290,12 +290,12 @@ void reverse(int *t, unsigned int i, unsigned int j,
       chaque $t[j] = \old(t[\old(j)-k+\old(i)])$ donc l'implication est vraie.\\
       Pour $I_4 = (\forall k; j < k <= \old(j) \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)]))$
       \begin{align*}
-        \WLP(10-14,I_4) \equiv & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \WLP(14, I_4)))))}\\
-        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \forall k; j-1 < k <= \old(j) \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)])))))}\\
-        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \forall k; j-1 < k <= \old(j) \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)]))))}\\
-        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \forall k; j-1 < k <= \old(j) \Rightarrow aux == \old(t[\old(j)-k+\old(i)])))}\\
-        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \forall k; j-1 < k <= \old(j) \Rightarrow aux == \old(t[\old(j)-k+\old(i)]))}\\
-        \equiv               & ~\breaktowidth{10cm}{\forall k; j-1 < k <= \old(j) \Rightarrow t[i] == \old(t[\old(j)-k+\old(i)])}
+        \WLP(10-14,I_4) \equiv & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \WLP(14, I_4)))))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \forall k; j-1 < k <= \old(j) \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)])))))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \WLP(12, \forall k; j-1 < k <= \old(j) \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)]))))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \forall k; j-1 < k <= \old(j) \Rightarrow aux == \old(t[\old(j)-k+\old(i)])))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \forall k; j-1 < k <= \old(j) \Rightarrow aux == \old(t[\old(j)-k+\old(i)]))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\forall k; j-1 < k <= \old(j) \Rightarrow t[i] == \old(t[\old(j)-k+\old(i)])}
       \end{align*}
       Donc $i < j \land I \Rightarrow \WLP(10-14,I_4)\\
       \equiv i < j \land I \Rightarrow \forall k; j-1 < k <= \old(j) \Rightarrow t[i] == \old(t[\old(j)-k+\old(i)])$\\
@@ -303,12 +303,12 @@ void reverse(int *t, unsigned int i, unsigned int j,
       chaque $t[j] = \old(t[\old(j)-k+\old(i)])$ donc l'implication est vraie.\\
       Pour $I_5 = (\forall k; i <= k <= j \Rightarrow t[k] == \old(t[k]))$
       \begin{align*}
-        \WLP(10-14,I_5) \equiv & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \WLP(14, I_5)))))}\\
-        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \forall k; i <= k <= j-1 \Rightarrow t[k] == \old(t[k])))))}\\
-        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, \WLP(12, (\forall k; i+1 <= k <= j-1 \Rightarrow t[k] == \old(t[k])) \Rightarrow I'_5)))}\\
-        \equiv               & ~\breaktowidth{10cm}{\WLP(10, \WLP(11, I'_5))}\\
-        \equiv               & ~\breaktowidth{10cm}{\WLP(10, I'_5)}\\
-        \equiv               & ~\breaktowidth{10cm}{I'_5 = (\forall k; i+1 <= k <= j-1 \Rightarrow t[k] == \old(t[k]))}
+        \WLP(10-14,I_5) \equiv & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \WLP(14, I_5)))))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \forall k; i <= k <= j-1 \Rightarrow t[k] == \old(t[k])))))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \WLP(12, (\forall k; i+1 <= k <= j-1 \Rightarrow t[k] == \old(t[k])) \Rightarrow I'_5)))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, I'_5))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, I'_5)}\\
+        \equiv               & ~\breaktowidth{8.2cm}{I'_5 = (\forall k; i+1 <= k <= j-1 \Rightarrow t[k] == \old(t[k]))}
       \end{align*}
       Donc $i < j \land I \Rightarrow \WLP(10-14,I_5)\\
       \equiv i < j \land I \Rightarrow \forall k; i+1 <= k <= j-1 \Rightarrow t[k] == \old(t[k])$\\
