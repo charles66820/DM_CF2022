@@ -427,21 +427,10 @@ isStrictlyBiggerPerm{L,M}(t,s,n) ||
     Complétez ces prédicats dans \texttt{formalism.h}. Les deux premiers lemmes de la section exercice 4 devraient être démontrés, mais pas les autres (c’est normal).
 
     \begin{solutionorbox}
-        Pour le lemme \code{maxHasNoIncrease}:
-        \begin{lstlisting}
-\forall int *t, integer n; isMaxPerm(t,n) ==> \forall integer i; 0 <= i < n-1 ==> t[i] > t[i+1];
-        \end{lstlisting}
-        On vérifie que chaque élément du tableau t, soit supérieur à l'élément suivant dans le tableau.
-        Comme dans \code{isMaxPerm}, on vérifie que la permutation est maximale, c'est-à-dire, que la
-        permutation correspond à l'ordre inverse des indices dans le tableau alors ces derniers sont forcément
-        ordonnés de manière décroissante donc le lemme \code{maxHasNoIncrease} est prouvé.
-        Pour le lemme \code{increaseIsNoMax}:
-        \begin{lstlisting}
-\forall int *t, integer n; isPermutation(t,n) ==> (\exists integer i; 0 <= i < n-1 && t[i] < t[i+1]) ==> !isMaxPerm(t,n);
-        \end{lstlisting}
-        On vérifie qu'il existe un indice où l'élément est inférieur à l'élément qui suit dans le tableau. Comme dit précédemment,
-        les éléments du tableau pour \code{isMaxPerm} sont forcément décroissants, donc l'implication est vraie.
-        Donc le lemme \code{increaseIsNoMax} est également prouvé.
+        Selon les 3 prédicats ci-dessus, la permutation minimale, c'est\\ $\forall i; 0 <= i < n \Rightarrow t[i] == i$
+        et la permutation maximale, c'est\\ $\forall i; 0 <= i < n \Rightarrow t[i] > t[i+1] \wedge t[i] == t[n-1-i]$\\
+        Autrement dit, la permutation minimale est la permutation pour laquelle chaque élément a pour valeur son indice dans l'ordre
+        croissant et dans l'ordre décroissant pour la permutation maximale.
     \end{solutionorbox}
 
     \part Implémentez maintenant une fonction qui place dans \code{P} la permutation minimale, avec le prototype et le contrat partiel suivants.
