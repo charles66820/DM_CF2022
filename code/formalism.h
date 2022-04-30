@@ -21,9 +21,9 @@
 //@ lemma equivIsBigger{L,M} : \forall int *t, int *s, integer n;  isBiggerPerm{L,M}(s,t,n) ==> isBiggerPerm{M,L}(t,s,n) ==> unchangedTab{L,M}(s,t,0,n);
 
 //À compléter :
-/*@ predicate isMinPerm{L}(int *t, integer n) = \true;
+/*@ predicate isMinPerm{L}(int *t, integer n) = \forall integer i; 0 <= i < n ==> i == \at(t[i],L);
 
-    predicate isMaxPerm{L}(int *t, integer n) = \true;
+    predicate isMaxPerm{L}(int *t, integer n) = \forall integer i; 0 <= i < n ==> i == \at(t[n-i],L);
  */
 
 // Exercice 4 :
