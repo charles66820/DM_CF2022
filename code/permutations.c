@@ -5,12 +5,20 @@ void initPerm(int *P, unsigned int n) {
   while (i < n)
   {
     P[i] = i;
+    i++;
   }
 
   return;
 }
 
 bool isMaxPerm(int *P, unsigned int n) {
-  // TODO
+  int i = n - 1;
+  while (i >= 0)
+  {
+    if (P[i] == i)
+      return false;
+    i--;
+  }
+
   return true;
 }
