@@ -535,15 +535,15 @@ void initPerm(int *P, unsigned int n) {
         On pose le variant $V = n-i$.\\
         On doit prouver que : $(i < n) \land I \Rightarrow V >= 0$ et $(i < n) \land I \Rightarrow \WLP(15-16, V < at(V,P_0))$\\
         Pour le premier lemme : $(i < n) \land I \Rightarrow V >= 0 \equiv (i < n) \land I \Rightarrow n-i >= 0$\\
-        Or comme on sait que pour qu'il n'y ait pas d'erreur d'exécution(car un tableau est de taille $>=0$), 
-        et que i est initialisé à 0 (ligne 6). Notre boucle incrémente i de 1 tant qu'il est plus petit n. A la sortie de la boucle
+        Or, on sait que pour qu'il n'y ait pas d'erreur d'exécution le tableau doit être de taille $>=0$,
+        et que i est initialisé à 0 (ligne 6). Notre boucle incrémente i de 1 tant qu'il est plus petit que n. À la sortie de la boucle,
         i est donc de la même valeur que n. On a alors $n-i \equiv n-n == 0$.\\
         Pour le deuxième lemme :$(i < n) \land I \Rightarrow \WLP(15-16, V < at(V,P_0)) \equiv (i < n) \land I \Rightarrow \WLP(15-16, n-i < at(n-i,10))$\\
         On fait le calcul :
         \begin{align*}
-            \WLP(15-16, n-i < at(n-i,10)) \equiv & ~\breaktowidth{7cm}{j-(i+1) < at(n-i,10)}\\
-                                      \equiv & ~\breaktowidth{7cm}{n-(i+1) < n-i}\\
-                                      \equiv & ~\breaktowidth{7cm}{\top}
+            \WLP(15-16, n-i < at(n-i,10)) \equiv & ~\breaktowidth{7cm}{n-(i+1) < at(n-i,10)}\\
+                                          \equiv & ~\breaktowidth{7cm}{n-(i+1) < n-i}\\
+                                          \equiv & ~\breaktowidth{7cm}{\top}
           \end{align*}
           Donc on peut déduire que le deuxième lemme est vrai.\\
           Comme on vient de prouver que $n-i$ est un variant pour la boucle 15-16,
