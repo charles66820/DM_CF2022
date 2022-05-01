@@ -21,14 +21,22 @@ void initPerm(int *P, unsigned int n) {
 bool isMaxPerm(int *P, unsigned int n) {
   bool res = true;
 
-  int i = n - 1;
-  while (i >= 0)
+  int i = 0;
+  /*@
+    loop invariant 0 <= i <= n;
+    loop invariant unchangedTab{Pre,Here}(P,P,0,n);
+    // loop invariant isMaxPerm(P,i) ==> res == 1 || !isMaxPerm(P,i) ==> res == 0;
+    loop invariant P[i] == n-1-i ==> res == 1 || res == 0;
+    loop assigns i, res;
+    loop variant n-i;
+  */
+  while (i < n)
   {
-    if (P[i] == i) {
+    if (P[i] != n-1-i) {
       res = false;
       break;
     }
-    i--;
+    i++;
   }
 
   return res;
