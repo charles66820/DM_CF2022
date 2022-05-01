@@ -450,7 +450,32 @@ void initPerm(int *P, unsigned int n);
     On attend à cette question que vous fournissiez les calculs de $\WLP$ adéquats.
 
     \begin{solutionorbox}
-        METTEZ VOTRE RÉPONSE ICI.
+        On a en tout, 4 invariants : $I = I_1 \wedge I_2 \wedge I_3 \wedge I_4$ avec :\\
+        $I_1 = (0 <= i <= n)$\\
+        $I_2 = (unchangedTab\{Pre,Here\}(P,P,i,n))$\\
+        $I_3 = (isPermutation(P,i))$\\
+        $I_4 = (isMinPerm(P,i))$\\
+        Tout d'abord on prouve :
+        $$\breaktowidth{12.7cm}{\neg(i<n) \wedge I \Rightarrow \WLP(8,\psi)\\
+        \equiv (i>=n) \wedge I \Rightarrow isPermutation(P,n) \wedge isMinPerm(P,n)}$$
+        
+
+        On remarque donc qu'on a : $i=j=k \Rightarrow t[k] == \old(t[k]) \equiv \top$\\
+        Donc l'implication est vraie.\\
+        Pour chaque $I_i$, on calcule $\WLP(10-14,I_i)$ : \\
+        Pour $I_1 = (i <= j+1 \wedge i >= \old(i) \wedge j <= \old(j))$
+        \begin{align*}
+        \WLP(10-14,I_1) \equiv & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \WLP(14, I_1)))))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, i <= j \wedge i >= \old(i) \wedge j-1 <= \old(j)))))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \WLP(12, (i+1 <= j \wedge i+1 >= \old(i) \wedge j-1 <= \old(j)) \Rightarrow I'_1)))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, I'_1))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, I'_1)}\\
+        \equiv               & ~\breaktowidth{8.2cm}{I'_1 = (i+1 <= j \wedge i+1 >= \old(i) \wedge j-1 <= \old(j))}
+        \end{align*}
+        Donc $i < j \land I \Rightarrow \WLP(10-14,I_1)\\
+        \equiv i < j \land I \Rightarrow i+1 <= j \wedge i+1 >= \old(i) \wedge j-1 <= \old(j) $\\
+        et on remarque que si $i<j$ alors on a bien $i+1<=j$ donc l'implication est vraie.\\
+        Pour $I_2 = (i + j == \old(i) + \old(j))$
     \end{solutionorbox}
 
     \part Démontrez la terminaison de cette fonction en donnant un variant pour votre boucle, et en démontrant que c’en est un.

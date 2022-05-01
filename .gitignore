@@ -3,6 +3,7 @@
 *.bbl
 *.blg
 *.log
+*.out
 *.pdf
 *.synctex.gz
 *.synctex(busy)

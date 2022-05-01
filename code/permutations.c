@@ -4,7 +4,6 @@ void initPerm(int *P, unsigned int n) {
   int i = 0;
   /*@
     loop invariant 0 <= i <= n;
-    //loop invariant \forall integer k; 0 <= k < i ==> P[k] < P[k+1];
     loop invariant unchangedTab{Pre,Here}(P,P,i,n);
     loop invariant isPermutation(P,i);
     loop invariant isMinPerm(P,i);
@@ -16,7 +15,6 @@ void initPerm(int *P, unsigned int n) {
     P[i] = i;
     i++;
   }
-
   return;
 }
 
