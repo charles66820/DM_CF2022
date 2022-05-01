@@ -457,19 +457,19 @@ ensures Psi1 : isPermutation(P,n);
 ensures Psi2 : isMinPerm(P,n);
 */
 void initPerm(int *P, unsigned int n) {
-    int i = 0;
-    /*@
-        loop invariant I1 : 0 <= i <= n;
-        loop invariant I2 : unchangedTab{Pre,Here}(P,P,i,n);
-        loop invariant I3 : isPermutation(P,i);
-        loop invariant I4 : isMinPerm(P,i);
-    */
-    while (i < n)
-    {
-        P[i] = i;
-        i++;
-    }
-    return;
+  int i = 0;
+  /*@
+    loop invariant I1 : 0 <= i <= n;
+    loop invariant I2 : unchangedTab{Pre,Here}(P,P,i,n);
+    loop invariant I3 : isPermutation(P,i);
+    loop invariant I4 : isMinPerm(P,i);
+  */
+  while (i < n)
+  {
+    P[i] = i;
+    i++;
+  }
+  return;
 }
         \end{lstlisting}
         On note $\psi = \psi_1 \wedge \psi_2$ et $I = I_1 \wedge I_2 \wedge I_3 \wedge I_4$\\
@@ -488,41 +488,42 @@ void initPerm(int *P, unsigned int n) {
         Comme 13-17 est une boucle, il nous reste à prouver deux lemmes pour pouvoir conclure que $\WLP(\code{initPerm},\psi)$ est bien définie.\\
         Tout d'abord on prouve le premier lemme :
         \begin{align*}
-            \neg(i<n) \wedge I \Rightarrow \psi \equiv & ~\breaktowidth{9cm}{\neg(i<n) \wedge I_1 \wedge I_2 \wedge I_3 \wedge I_4 \Rightarrow \psi_1 \wedge \psi_2}\\
-                                                \equiv & ~\breaktowidth{9cm}{(i>=n) \wedge (0 <= i <= n) \wedge unchangedTab\{Pre,Here\}(P,P,i,n) \wedge isPermutation(P,i) \wedge isMinPerm(P,i) \Rightarrow isPermutation(P,n) \wedge isMinPerm(P,n)}\\
-                                                \equiv & ~\breaktowidth{9cm}{(i>=n) \wedge (0 <= i == n) \wedge unchangedTab\{Pre,Here\}(P,P,n,n) \wedge isPermutation(P,n) \wedge isMinPerm(P,n) \Rightarrow isPermutation(P,n) \wedge isMinPerm(P,n)}\\
-                                                \equiv & ~\breaktowidth{9cm}{\top}
+            \neg(i<n) \wedge I \Rightarrow \psi \equiv & ~\breaktowidth{5cm}{\neg(i<n) \wedge I_1 \wedge I_2 \wedge I_3 \wedge I_4 \Rightarrow \psi_1 \wedge \psi_2}\\
+                                                \equiv & ~\breaktowidth{5cm}{(i>=n) \wedge (0 <= i <= n) \wedge unchangedTab\{Pre,Here\}(P,P,i,n) \wedge isPermutation(P,i) \wedge isMinPerm(P,i) \Rightarrow isPermutation(P,n) \wedge isMinPerm(P,n)}\\
+                                                \equiv & ~\breaktowidth{5cm}{(i>=n) \wedge (0 <= i == n) \wedge unchangedTab\{Pre,Here\}(P,P,n,n) \wedge isPermutation(P,n) \wedge isMinPerm(P,n) \Rightarrow isPermutation(P,n) \wedge isMinPerm(P,n)}\\
+                                                \equiv & ~\breaktowidth{5cm}{\top}
         \end{align*}
         Comme on a les éléments de l'implication à la fois à droite et à gauche alors le lemme est prouvé.\\
         Ensuite on prouve le deuxième lemme :\\ $(i<n) \wedge I_1 \wedge I_2 \wedge I_3 \wedge I_4 \Rightarrow \WLP(15-16,I_1 \wedge I_2 \wedge I_3 \wedge I_4)$\\
         On calcule :
         \begin{align*}
-            \WLP(15-16,I_1 \wedge I_2 \wedge I_3 \wedge I_4) \equiv & ~\breaktowidth{8.8cm}{\WLP(15, (0 <= i+1 <= n) \wedge unchangedTab\{Pre,Here\}(P,P,i+1,n) \wedge isPermutation(P,i+1) \wedge isMinPerm(P,i+1))}\\
-                                                             \equiv & ~\breaktowidth{8.8cm}{((0 <= i+1 <= n)}\\
-                                                                    & ~\breaktowidth{8.8cm}{\wedge unchangedTab\{Pre,Here\}(P,P,i+1,n)}\\
-                                                                    & ~\breaktowidth{8.8cm}{\wedge isPermutation(P,i+1)}\\
-                                                                    & ~\breaktowidth{8.8cm}{\wedge isMinPerm(P,i+1))[P[i] \leftarrow i]}\\
-                                                             \equiv & ~\breaktowidth{8.8cm}{((0 <= i+1 <= n)}\\
-                                                                    & ~\breaktowidth{8.8cm}{\wedge (\forall j; i+1 <= j < n \Rightarrow \old(P[j]) == P[j])}\\
-                                                                    & ~\breaktowidth{8.8cm}{\wedge (\forall k; 0 <= k < i+1 \Rightarrow 0 <= P[k] < i+1 \wedge \forall k,j; 0 <= k < j < i+1 \Rightarrow P[k] != P[j])}\\
-                                                                    & ~\breaktowidth{8.8cm}{\wedge (\forall k; 0 <= k < i+1 \Rightarrow k == P[k]))[P[i] \leftarrow i]}\\
-                                                             \equiv & ~\breaktowidth{8.8cm}{((0 <= i+1 <= n)}\\
-                                                                    & ~\breaktowidth{8.8cm}{\wedge ((\forall j; i <= j < n \Rightarrow P[j] == P[j]) \wedge P[i] == P[i])}\\
-                                                                    & ~\breaktowidth{8.8cm}{\wedge ((\forall k; 0 <= k < i \Rightarrow 0 <= P[k] < i+1) \wedge 0 <= P[i] < i+1 \wedge (\forall k,j; 0 <= k < j < i \Rightarrow P[k] != P[j]) \wedge P[i-1] != P[i])}\\
-                                                                    & ~\breaktowidth{8.8cm}{\wedge ((\forall k; 0 <= k < i \Rightarrow k == P[k]) \wedge i == P[i]))[P[i] \leftarrow i]}\\
-                                                             \equiv & ~\breaktowidth{8.8cm}{(0 <= i+1 <= n)}\\
-                                                                    & ~\breaktowidth{8.8cm}{\wedge ((\forall j; i <= j < n \Rightarrow P[j] == P[j]) \wedge i == i)}\\
-                                                                    & ~\breaktowidth{8.8cm}{\wedge ((\forall k; 0 <= k < i \Rightarrow 0 <= P[k] < i+1) \wedge 0 <= i < i+1 \wedge (\forall k,j; 0 <= k < j < i \Rightarrow P[k] != P[j]) \wedge (i-1) != i)}\\
-                                                                    & ~\breaktowidth{8.8cm}{\wedge ((\forall k; 0 <= k < i \Rightarrow k == P[k]) \wedge i == i)}\\
-                                                             \equiv & ~\breaktowidth{8.8cm}{(0 <= i+1 <= n)}\\
-                                                                    & ~\breaktowidth{8.8cm}{\wedge ((\forall j; i <= j < n \Rightarrow \top) \wedge \top)}\\
-                                                                    & ~\breaktowidth{8.8cm}{\wedge ((\forall k; 0 <= k < i \Rightarrow 0 <= P[k] < i+1) \wedge \top \wedge (\forall k,j; 0 <= k < j < i \Rightarrow P[k] != P[j]) \wedge \top)}\\
-                                                                    & ~\breaktowidth{8.8cm}{\wedge ((\forall k; 0 <= k < i \Rightarrow k == P[k]) \wedge \top)}\\
-                                                             \equiv & ~\breaktowidth{8.8cm}{(0 <= i+1 <= n) \wedge \top}\\
-                                                                    & ~\breaktowidth{8.8cm}{\wedge ((\forall k; 0 <= k < i \Rightarrow (0 <= P[k] < i+1 \wedge k == P[k])) \wedge (\forall k,j; 0 <= k < j < i \Rightarrow P[k] != P[j]))}\\
-                                                             \equiv & ~\breaktowidth{8.8cm}{(0 <= i+1 <= n)}\\
-                                                                    & ~\breaktowidth{8.8cm}{\wedge ((\forall k; 0 <= k < i \Rightarrow (0 <= k < i+1 \wedge k == P[k])) \wedge (\forall k,j; 0 <= k < j < i \Rightarrow P[k] != P[j]))}\\
-                                                             \equiv & ~\breaktowidth{8.8cm}{(0 <= i+1 <= n) \wedge ((\forall k; 0 <= k < i \Rightarrow (\top \wedge k == P[k])) \wedge (\forall k,j; 0 <= k < j < i \Rightarrow P[k] != P[j]))}\\
+            \breaktowidth{9.5cm}{\WLP(15-16,I_1 \wedge I_2 \wedge I_3 \wedge I_4)}\\
+            \equiv \breaktowidth{9cm}{\WLP(15, (0 <= i+1 <= n) \wedge unchangedTab\{Pre,Here\}(P,P,i+1,n) \wedge isPermutation(P,i+1) \wedge isMinPerm(P,i+1))}\\
+            \equiv \breaktowidth{9cm}{((0 <= i+1 <= n)}\\
+                   \breaktowidth{9cm}{\wedge unchangedTab\{Pre,Here\}(P,P,i+1,n)}\\
+                   \breaktowidth{9cm}{\wedge isPermutation(P,i+1)}\\
+                   \breaktowidth{9cm}{\wedge isMinPerm(P,i+1))[P[i] \leftarrow i]}\\
+            \equiv \breaktowidth{9cm}{((0 <= i+1 <= n)}\\
+                   \breaktowidth{9cm}{\wedge (\forall j; i+1 <= j < n \Rightarrow \old(P[j]) == P[j])}\\
+                   \breaktowidth{9cm}{\wedge (\forall k; 0 <= k < i+1 \Rightarrow 0 <= P[k] < i+1 \wedge \forall k,j; 0 <= k < j < i+1 \Rightarrow P[k] != P[j])}\\
+                   \breaktowidth{9cm}{\wedge (\forall k; 0 <= k < i+1 \Rightarrow k == P[k]))[P[i] \leftarrow i]}\\
+            \equiv \breaktowidth{9cm}{((0 <= i+1 <= n)}\\
+                   \breaktowidth{9cm}{\wedge ((\forall j; i <= j < n \Rightarrow P[j] == P[j]) \wedge P[i] == P[i])}\\
+                   \breaktowidth{9cm}{\wedge ((\forall k; 0 <= k < i \Rightarrow 0 <= P[k] < i+1) \wedge 0 <= P[i] < i+1 \wedge (\forall k,j; 0 <= k < j < i \Rightarrow P[k] != P[j]) \wedge P[i-1] != P[i])}\\
+                   \breaktowidth{9cm}{\wedge ((\forall k; 0 <= k < i \Rightarrow k == P[k]) \wedge i == P[i]))[P[i] \leftarrow i]}\\
+            \equiv \breaktowidth{9cm}{(0 <= i+1 <= n)}\\
+                   \breaktowidth{9cm}{\wedge ((\forall j; i <= j < n \Rightarrow P[j] == P[j]) \wedge i == i)}\\
+                   \breaktowidth{9cm}{\wedge ((\forall k; 0 <= k < i \Rightarrow 0 <= P[k] < i+1) \wedge 0 <= i < i+1 \wedge (\forall k,j; 0 <= k < j < i \Rightarrow P[k] != P[j]) \wedge (i-1) != i)}\\
+                   \breaktowidth{9cm}{\wedge ((\forall k; 0 <= k < i \Rightarrow k == P[k]) \wedge i == i)}\\
+            \equiv \breaktowidth{9cm}{(0 <= i+1 <= n)}\\
+                   \breaktowidth{9cm}{\wedge ((\forall j; i <= j < n \Rightarrow \top) \wedge \top)}\\
+                   \breaktowidth{9cm}{\wedge ((\forall k; 0 <= k < i \Rightarrow 0 <= P[k] < i+1) \wedge \top \wedge (\forall k,j; 0 <= k < j < i \Rightarrow P[k] != P[j]) \wedge \top)}\\
+                   \breaktowidth{9cm}{\wedge ((\forall k; 0 <= k < i \Rightarrow k == P[k]) \wedge \top)}\\
+            \equiv \breaktowidth{9cm}{(0 <= i+1 <= n) \wedge \top}\\
+                   \breaktowidth{9cm}{\wedge ((\forall k; 0 <= k < i \Rightarrow (0 <= P[k] < i+1 \wedge k == P[k])) \wedge (\forall k,j; 0 <= k < j < i \Rightarrow P[k] != P[j]))}\\
+            \equiv \breaktowidth{9cm}{(0 <= i+1 <= n)}\\
+                   \breaktowidth{9cm}{\wedge ((\forall k; 0 <= k < i \Rightarrow (0 <= k < i+1 \wedge k == P[k])) \wedge (\forall k,j; 0 <= k < j < i \Rightarrow P[k] != P[j]))}\\
+            \equiv \breaktowidth{9cm}{(0 <= i+1 <= n) \wedge ((\forall k; 0 <= k < i \Rightarrow (\top \wedge k == P[k])) \wedge (\forall k,j; 0 <= k < j < i \Rightarrow P[k] != P[j]))}\\
         \end{align*}
         On remarque qu'avec les deux \code{forall} restants, chaque élément du tableau P correspond à son indice et donc ils sont tous forcément différents les uns des autres.
         Donc le deuxième lemme est prouvé.\\
