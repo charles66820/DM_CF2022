@@ -146,7 +146,7 @@ void swap(int *a, int *b)
 
     \begin{solutionorbox}
       \begin{align*}
-        \WP(\code{swap},4) \equiv & ~\WP(6-8,\psi)                                                                                                                    \\
+        \WP(\code{swap},\psi) \equiv & ~\WP(6-8,\psi)                                                                                                                 \\
         \equiv                    & ~\WP(6, \WP(7, \WP(8, \psi)))                                                                                                     \\
         \equiv                    & ~\breaktowidth{10cm}{\WP(6, \WP(7, ((*a) \XOR (*b) == \old(*b) \wedge *b == \old(*a))))}                                          \\
         \equiv                    & ~\breaktowidth{10cm}{\WP(6, (*a) \XOR ((*a) \XOR (*b)) == \old(*b) \wedge (*a) \XOR (*b) == \old(*a))}                            \\
@@ -156,9 +156,8 @@ void swap(int *a, int *b)
         \equiv                    & ~\breaktowidth{10cm}{*b == *b \wedge *a == *a}                                                                                    \\
         \equiv                    & ~\top
       \end{align*}
-      Triplet de Hoare $= \{\top\}swap\{\psi\}$ avec $\psi \equiv \psi_1 \wedge \psi_2$\\
-      $\psi_1 = (*a == \old(*b))$\\
-      $\psi_2 = (*b == \old(*a))$
+      Donc on peut en déduire ce triplet de Hoare $= \{\top\}swap\{\psi\}$ avec $\psi \equiv \psi_1 \wedge \psi_2$\\
+      et $\psi_1 = (*a == \old(*b))$ et $\psi_2 = (*b == \old(*a))$.
     \end{solutionorbox}
 
     \part Évidemment, on a ici une correction partielle, dans le sens où on n’a pas tenu compte des comportements indéterminés.
@@ -261,8 +260,8 @@ void reverse(int *t, unsigned int i, unsigned int j,
         \equiv               & ~\breaktowidth{8.2cm}{I'_1 = (i+1 <= j \wedge i+1 >= \old(i) \wedge j-1 <= \old(j))}
       \end{align*}
       Donc $i < j \land I \Rightarrow \WLP(10-14,I_1)\\
-      \equiv i < j \land I \Rightarrow i+1 <= j \wedge i+1 >= \old(i) \wedge j-1 <= \old(j) $\\
-      et on remarque que si $i<j$ alors on a bien $i+1<=j$ donc l'implication est vraie.\\
+      \equiv i < j \land I \Rightarrow i+1 <= j \wedge i+1 >= i \wedge j-1 <= j $\\
+      et on remarque que $i <= i+1 <= j <= j+1 \equiv \top$ donc l'implication est vraie.\\
       Pour $I_2 = (i + j == \old(i) + \old(j))$
       \begin{align*}
         \WLP(10-14,I_2) \equiv & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \WLP(14, I_2)))))}\\
@@ -281,13 +280,14 @@ void reverse(int *t, unsigned int i, unsigned int j,
         \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, I_3))))}\\
         \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \WLP(12, \forall k; \old(i) <= k < i+1 \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)]))))}\\
         \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \forall k; \old(i) <= k < i+1 \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)])))}\\
-        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \forall k; \old(i) <= k < i+1 \Rightarrow t[j] == \old(t[\old(j)-k+\old(i)]))}\\
-        \equiv               & ~\breaktowidth{8.2cm}{\forall k; \old(i) <= k < i+1 \Rightarrow t[j] == \old(t[\old(j)-k+\old(i)])}
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, (\forall k; \old(i) <= k < i \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)])) \wedge t[i] == \old(t[\old(j)-k+\old(i)]))}\\
+        \equiv               & ~\breaktowidth{8.2cm}{\WLP(10, (\forall k; \old(i) <= k < i \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)])) \wedge t[j] == \old(t[\old(j)-k+\old(i)])}\\
+        \equiv               & ~\breaktowidth{8.2cm}{(\forall k; \old(i) <= k < i \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)])) \wedge t[j] == \old(t[\old(j)-j+\old(i)])}\\
       \end{align*}
       Donc $i < j \land I \Rightarrow \WLP(10-14,I_3)\\
-      \equiv i < j \land I \Rightarrow \forall k; \old(i) <= k < i+1 \Rightarrow t[j] == \old(t[\old(j)-k+\old(i)])$\\
-      or grâce à l'invariant $I_4$ et comme on a $i<j$, alors dans la portion du tableau, pour chaque k entre la valeur initiale de $i$ et $i+1$, on a
-      chaque $t[j] = \old(t[\old(j)-k+\old(i)])$ donc l'implication est vraie.\\
+      \equiv i < j \land I \Rightarrow (\forall k; \old(i) <= k < i \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)])) \wedge t[j] == \old(t[\old(j)-j+\old(i)])$\\
+      or comme on évalue au début de la boucle, alors le \code{forall} n'est jamais exécuté et grâce à l'invariant $I_4$, on sait que dans la portion du tableau,
+      pour chaque k entre la valeur initiale de $i$ et $i+1$, on a chaque $t[k] = \old(t[\old(j)-k+\old(i)])$ donc l'implication est vraie.\\
       Pour $I_4 = (\forall k; j < k <= \old(j) \Rightarrow t[k] == \old(t[\old(j)-k+\old(i)]))$
       \begin{align*}
         \WLP(10-14,I_4) \equiv & ~\breaktowidth{8.2cm}{\WLP(10, \WLP(11, \WLP(12, \WLP(13, \WLP(14, I_4)))))}\\
@@ -401,8 +401,8 @@ predicate isPermutation(int *v, integer n) =
     \part Justifiez (rapidement) que ce prédicat est bien équivalent à la définition d’une permutation.
 
     \begin{solutionorbox}
-        La ligne 2 du prédicat vérifie que pour tout entier de $0$ à $n-1$ dans le tableau v, est bien associé à un entier
-        entre $0$ et $n-1$. La ligne 3 du prédicat vérifie chaque valeur associée dans le tableau v est unique, c'est-à-dire
+        La ligne 2 du prédicat vérifie que chaque entier de $0$ à $n-1$ dans le tableau v, est bien associé à un entier
+        entre $0$ et $n-1$. La ligne 3 du prédicat vérifie que chaque valeur associée dans le tableau v est unique, c'est-à-dire
         qu'il vérifie que c'est bien une bijection. Donc ce prédicat est bien équivalent à la définition d'une permutation.
     \end{solutionorbox}
 
@@ -570,7 +570,7 @@ bool isMaxPerm(int *P, unsigned int n);
     Cela dit, si vous ne parvenez pas à tout démontrer et souhaitez me montrer sur papier ce que vous essayez de faire et faire des preuves partielles, vous pouvez le faire en suivant :
 
     \begin{solutionorbox}
-        METTEZ VOTRE RÉPONSE ICI.
+        Nous avons tout démontré pour la fonction \code{isMaxPerm} ci-dessus.
     \end{solutionorbox}
 
     \end{parts}
